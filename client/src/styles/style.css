@@ -1,0 +1,17 @@
+.grid {
+  width: 900px;
+  height: 600px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.grid-elem {
+  margin: 2px;
+  height: 16px;
+  width: 16px;
+  background-color: wheat;
+}
+/*# sourceMappingURL=style.css.map */
