@@ -1,24 +1,24 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
+import GridElem from './GridElem'
+
 export default function Pathfinder() {
-    let grid = []
+    const [grid, setGrid] = useState([])
 
-    const makeGridElem = idx => {
-        return (
-            <div className="grid-elem" key={idx}></div>
-        )
-    }
+    useEffect(() => {
+        for (let i = 0; i < 1350; i++) {
+            setGrid(prevState => [...prevState, <GridElem key={i} />])
+        }
+    }, [])
 
-    for (let i = 0; i < 1350; i++) {
-        grid.push(makeGridElem(i))
-    }
-
-    console.log(grid)
     return (
         <div id="pathfinder">
             <Link to="/">Home</Link>
             <div className="path-display">
+                <header>
+                    <h1>Pathfinder</h1>
+                </header>
                 <div className="grid">
                     {grid}
                 </div>
