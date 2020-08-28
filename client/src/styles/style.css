@@ -6,6 +6,7 @@
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+  margin: auto;
 }
 
 .grid-elem {
@@ -15,7 +16,7 @@
   background-color: wheat;
 }
 
-.grid-elem:hover{
+.grid-elem:hover {
   opacity: 50%;
 }
 
@@ -30,5 +31,4 @@
 .wall {
   background-color: slateblue;
 }
-
 /*# sourceMappingURL=style.css.map */

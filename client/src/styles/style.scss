@@ -3,6 +3,7 @@
     height: 600px;
     display: flex;
     flex-wrap: wrap;
+    margin: auto;
 }
 
 .grid-elem {
@@ -10,4 +11,20 @@
     height: 16px;
     width: 16px;
     background-color: wheat;
+}
+  
+.grid-elem:hover{
+    opacity: 50%;
+}
+  
+.start {
+    background-color: black;
+}
+  
+.end {
+    background-color: red;
+}
+  
+.wall {
+    background-color: slateblue;
 }
