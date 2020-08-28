@@ -72,37 +72,67 @@ export default function Pathfinder() {
         setSelector(e.target.value)
     }
 
-    const runPath = (queue, path=Array.from({length: 1350}, () => null), pointer=start) => {
+    const handleRepath = (path, stat=status) => {
+        if (path.length === 0) {
+            console.log(stat)
+            return
+        }
+        let tempStatus = [...stat]
+        tempStatus[path.shift()] = "path"
+        setStatus(tempStatus)
+        setTimeout(() => {
+            handleRepath(path, tempStatus)
+        }, 0)
+    }
+
+    const runPath = (queue, path=Array.from({length: 1350}, () => null), pointer=start, repath=[]) => {
         if (pointer === end) {
-            alert("Found")
+            handleRepath(repath)
             return
         }
         // Check up
         if (pointer - 45 > 0 && !path[pointer-45]) {
             queue.add(pointer - 45)
             path[pointer-45] = true
+            repath.push(pointer-45)
+            if (pointer-45 === end) {
+                handleRepath(repath)
+                return
+            }
         }
         // Check right
         if ((pointer + 1) % 45 !== 0 && !path[pointer+1]) {
             queue.add(pointer + 1)
             path[pointer+1] = true
+            repath.push(pointer+1)
+            if (pointer+1 === end) {
+                handleRepath(repath)
+                return
+            }
         }
         // Check down
         if (pointer + 45 < 1350 && !path[pointer+45]) {
             queue.add(pointer + 45)
             path[pointer+45] = true
+            repath.push(pointer+45)
+            if (pointer+45 === end) {
+                handleRepath(repath)
+                return
+            }
         }
         // Check left
         if (pointer % 45 !== 0 && !path[pointer-1]) {
             queue.add(pointer - 1)
             path[pointer-1] = true
+            repath.push(pointer-1)
+            if (pointer-1 === end) {
+                handleRepath(repath)
+                return
+            }
         }
 
         pointer = queue.get()
-        console.log(pointer)
-        setTimeout(() => {
-            runPath(queue, path, pointer)
-        }, 50)
+        runPath(queue, path, pointer, repath)
     }
 
 
@@ -112,35 +142,8 @@ export default function Pathfinder() {
             return
         }
         let queue = new Queue()
-        // let pointer = start
         console.log(start)
         runPath(queue)
-        // while (pointer !== end) {
-        //     // Check left
-        //     if (pointer % 45 !== 0 && !path.find(i => i === pointer - 1)) {
-        //         queue.add(pointer - 1)
-        //         path.push(pointer-1)
-        //     }
-        //     // Check right
-        //     if ((pointer + 1) % 45 !== 0 && !path.find(i => i === pointer - 1)) {
-        //         queue.add(pointer + 1)
-        //         path.push(pointer+1)
-        //     }
-        //     // Check up
-        //     if (pointer - 45 > 0 && !path.find(i => i === pointer - 1)) {
-        //         queue.add(pointer - 45)
-        //         path.push(pointer-45)
-        //     }
-        //     // Check down
-        //     if (pointer + 45 < 1350 && !path.find(i => i === pointer - 1)) {
-        //         queue.add(pointer + 45)
-        //         path.push(pointer+45)
-        //     }
-
-        //     pointer = queue.get()
-        //     console.log(path)
-        //     console.log(pointer)
-        // }
     }
 
     let grid = []
