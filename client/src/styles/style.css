@@ -15,8 +15,20 @@
   background-color: wheat;
 }
 
+.grid-elem:hover{
+  opacity: 50%;
+}
+
 .start {
   background-color: black;
+}
+
+.end {
+  background-color: red;
+}
+
+.wall {
+  background-color: slateblue;
 }
 
 /*# sourceMappingURL=style.css.map */

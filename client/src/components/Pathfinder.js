@@ -1,28 +1,60 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import GridElem from './GridElem'
 
 export default function Pathfinder() {
-    const [grid, setGrid] = useState([])
     const [status, setStatus] = useState(Array.from({length: 1350}, () => null))
     const [selector, setSelector] = useState("")
-
-    useEffect(() => {
-        setGrid([])
-        for (let i = 0; i < 1350; i++) {
-            setGrid(prevState => [...prevState, <GridElem key={i} index={i} status={status[i]} selector={selector} handleClick={handleClick} />])
-        }
-    }, [status, selector])
+    const [start, setStart] = useState(-1)
+    const [end, setEnd] = useState(-1)
+    const [wall, setWall] = useState([])
 
     const handleClick = idx => {
         let tempStatus = [...status]
         tempStatus[idx] = selector
+        if (selector === "start" && start >= 0) {
+            tempStatus[start] = null
+        } else if (selector === "end" && end >= 0) {
+            tempStatus[end] = null
+        }
         setStatus(tempStatus)
+        switch(selector) {
+            case "start":
+                setStart(idx)
+                if (idx === end) {
+                    setEnd(-1)
+                }
+                break
+            case "end":
+                setEnd(idx)
+                if (idx === start) {
+                    setStart(-1)
+                }
+                break
+            case "wall":
+                if (idx === end) {
+                    setEnd(-1)
+                } else if (idx === start) {
+                    setStart(-1)
+                }
+                if (!wall.find(elem => elem === idx)) {
+                    setWall(prevState => [...prevState, idx])
+                }
+                break
+            default:
+                alert("Error: Invalid selector")
+        }
     }
 
     const handleSelector = e => {
         setSelector(e.target.value)
+    }
+
+    let grid = []
+
+    for (let i = 0; i < 1350; i++) {
+        grid.push(<GridElem key={i} index={i} status={status[i]} selector={selector} handleClick={handleClick} />)
     }
 
     return (
